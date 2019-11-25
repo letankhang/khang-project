@@ -17,7 +17,13 @@ class Post(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.title)
+        from datetime import datetime
+
+        slugify_string = slugify(self.title)
+        time = datetime.now()
+        time = "".join(str(time).split(".", ))
+
+        self.slug = slugify_string + time[17:]
         super(Post, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
